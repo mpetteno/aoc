@@ -18,16 +18,12 @@ def parse_input():
     return parsed_area, rows, cols, start_pos, moves
 
 
-def get_box_gps_coordinate(box_x, box_y):
-    return box_x * 100 + box_y
-
-
 def sum_gps_coordinates(area, char):
     output = 0
     for a in range(len(area)):
         for b in range(len(area[0])):
             if area[a][b] == char:
-                output += get_box_gps_coordinate(a, b)
+                output += a * 100 + b
     return output
 
 
