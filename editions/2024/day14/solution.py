@@ -1,15 +1,11 @@
+from typing import Any
 
-def parse_input():
-    robots = open("input.txt").readlines()
-    positions = []
-    velocities = []
-    for robot in robots:
-        p, v = robot.split(" ")
-        col, row = p.split("=")[1].split(",")
-        positions.append((int(row), int(col)))
-        v_col, v_row = v.split("=")[1].split(",")
-        velocities.append((int(v_row), int(v_col)))
-    return positions, velocities
+from solvers.python_solver import Solver
+
+AREA_COLS = 101
+AREA_ROWS = 103
+TIME_STEPS = 100
+MID_ROW, MID_COL = AREA_ROWS // 2, AREA_COLS // 2
 
 
 def get_quadrant(x, y):
@@ -55,34 +51,52 @@ def check_aligned_robots(area, min_count, horizontal: bool = True):
     return False
 
 
-if __name__ == "__main__":
-    AREA_COLS = 101
-    AREA_ROWS = 103
-    TIME_STEPS = 100
-    MID_ROW, MID_COL = AREA_ROWS // 2, AREA_COLS // 2
-    robots_init_pos, robots_vel = parse_input()
-    quadrants_count = [0] * 4
-    for i in range(len(robots_init_pos)):
-        final_pos_row, final_pos_col = move_robot(TIME_STEPS, robots_init_pos[i], robots_vel[i])
-        quadrant = get_quadrant(final_pos_row, final_pos_col)
-        if quadrant != -1:
-            quadrants_count[quadrant] += 1
-    safety_factor = get_safety_factor(quadrants_count)
-    print(f'(Part 1) Safety factor: {safety_factor}')
-    area_map = [[0] * AREA_COLS for _ in range(AREA_ROWS)]
-    MIN_ALIGNED_ROBOTS = 10
-    timesteps_count = 0
-    while True:
-        # Move each robot for a single time step
-        timesteps_count += 1
-        for k in range(len(robots_init_pos)):
-            curr_pos_x, curr_pos_y = robots_init_pos[k]
-            final_pos_row, final_pos_col = move_robot(1, robots_init_pos[k], robots_vel[k])
-            area_map[curr_pos_x][curr_pos_y] = 0
-            robots_init_pos[k] = final_pos_row, final_pos_col
-            area_map[final_pos_row][final_pos_col] = 1
-        # Check for aligned robots
-        if (check_aligned_robots(area_map, min_count=MIN_ALIGNED_ROBOTS)
-                or check_aligned_robots(area_map, min_count=MIN_ALIGNED_ROBOTS, horizontal=False)):
-            break
-    print(f'(Part 2) XMas tree timesteps: {timesteps_count}')
+class Solution(Solver):
+
+    def parse_input(self) -> Any:
+        robots = self.input_data.splitlines()
+        positions = []
+        velocities = []
+        for robot in robots:
+            p, v = robot.split(" ")
+            col, row = p.split("=")[1].split(",")
+            positions.append((int(row), int(col)))
+            v_col, v_row = v.split("=")[1].split(",")
+            velocities.append((int(v_row), int(v_col)))
+        return positions, velocities
+
+    def solve_first_part(self, parsed_input: Any) -> str:
+        robots_init_pos, robots_vel = parsed_input
+        quadrants_count = [0] * 4
+        for i in range(len(robots_init_pos)):
+            final_pos_row, final_pos_col = move_robot(TIME_STEPS, robots_init_pos[i], robots_vel[i])
+            quadrant = get_quadrant(final_pos_row, final_pos_col)
+            if quadrant != -1:
+                quadrants_count[quadrant] += 1
+        safety_factor = get_safety_factor(quadrants_count)
+        return f'Safety factor: {safety_factor}'
+
+    def solve_second_part(self, parsed_input: Any) -> str:
+        robots_init_pos, robots_vel = parsed_input
+        area_map = [[0] * AREA_COLS for _ in range(AREA_ROWS)]
+        min_aligned_robots = 10
+        timesteps_count = 0
+        while True:
+            # Move each robot for a single time step
+            timesteps_count += 1
+            for k in range(len(robots_init_pos)):
+                curr_pos_x, curr_pos_y = robots_init_pos[k]
+                final_pos_row, final_pos_col = move_robot(1, robots_init_pos[k], robots_vel[k])
+                area_map[curr_pos_x][curr_pos_y] = 0
+                robots_init_pos[k] = final_pos_row, final_pos_col
+                area_map[final_pos_row][final_pos_col] = 1
+            # Check for aligned robots
+            if (check_aligned_robots(area_map, min_count=min_aligned_robots)
+                    or check_aligned_robots(area_map, min_count=min_aligned_robots, horizontal=False)):
+                break
+        return f'XMas tree timesteps: {timesteps_count}'
+
+
+if __name__ == '__main__':
+    solution = Solution()
+    solution.run()

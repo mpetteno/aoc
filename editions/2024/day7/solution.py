@@ -1,5 +1,7 @@
 from operator import add, mul
-from typing import List, Callable
+from typing import List, Callable, Any
+
+from solvers.python_solver import Solver
 
 
 def concatenate(a: int, b: int) -> int:
@@ -20,9 +22,20 @@ def evaluate_equations(equations: List[str], operators: List[Callable]) -> int:
     return test_value_sum
 
 
+class Solution(Solver):
+
+    def parse_input(self) -> Any:
+        return self.input_data.splitlines()
+
+    def solve_first_part(self, parsed_input: Any) -> str:
+        output = evaluate_equations(parsed_input, [add, mul])
+        return f'Correct test value sum: {output}'
+
+    def solve_second_part(self, parsed_input: Any) -> str:
+        output = evaluate_equations(parsed_input, [add, mul, concatenate])
+        return f'Correct test value sum: {output}'
+
+
 if __name__ == '__main__':
-    lines = [l.strip() for l in open('input.txt', 'r').readlines()]
-    pt1_output = evaluate_equations(lines, [add, mul])
-    print(f'(Part 1) Correct test value sum: {pt1_output}')
-    pt2_output = evaluate_equations(lines, [add, mul, concatenate])
-    print(f'(Part 2) Correct test value sum: {pt2_output}')
+    solution = Solution()
+    solution.run()

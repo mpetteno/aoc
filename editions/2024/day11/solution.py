@@ -1,5 +1,7 @@
 from collections import defaultdict
-from typing import List
+from typing import Any, List
+
+from solvers.python_solver import Solver
 
 
 def run_n_blinking(stones: List[str], n: int) -> int:
@@ -21,7 +23,18 @@ def run_n_blinking(stones: List[str], n: int) -> int:
     return sum(stone_count_map.values())
 
 
+class Solution(Solver):
+
+    def parse_input(self) -> Any:
+        return self.input_data.split(' ')
+
+    def solve_first_part(self, parsed_input: Any) -> str:
+        return f'Stones count after 25 blinks: {run_n_blinking(parsed_input, 25)}'
+
+    def solve_second_part(self, parsed_input: Any) -> str:
+        return f'Stones count after 75 blinks: {run_n_blinking(parsed_input, 75)}'
+
+
 if __name__ == '__main__':
-    input_line = open('input.txt', 'r').readline().split(' ')
-    print(f'(Part 1) Stones count after 25 blinks: {run_n_blinking(input_line, 25)}')
-    print(f'(Part 2) Stones count after 75 blinks: {run_n_blinking(input_line, 75)}')
+    solution = Solution()
+    solution.run()

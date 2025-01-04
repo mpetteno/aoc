@@ -1,26 +1,14 @@
 from collections import defaultdict
-from typing import Tuple, Set, Dict
+from typing import Tuple, Set, Dict, Any
+
+from solvers.python_solver import Solver
+
 
 DIRECTIONS = [(-1, 0), (0, 1), (1, 0), (0, -1)]
 DIR_CHARS = ['^', '>', 'V', '<']
 
 
-def parse_input() -> [int, int, int, int, int, Set[Tuple[int, int]]]:
-    area_map = [list(line.strip()) for line in open('input.txt', 'r').readlines()]
-    rows, cols = len(area_map), len(area_map[0])
-    init_x, init_y, init_dir = 0, 0, '>'
-    obs = set()
-    for i in range(rows):
-        for j in range(cols):
-            current_grid = area_map[i][j]
-            if current_grid in DIR_CHARS:
-                init_x, init_y, init_dir = i, j, DIR_CHARS.index(current_grid)
-            elif current_grid == '#':
-                obs.add((i, j))
-    return rows, cols, init_x, init_y, init_dir, obs
-
-
-def walk(obstacles, x, y, direction: int) -> [Dict[Tuple[int, int], Set[str]], bool]:
+def walk(obstacles, rows, cols, x, y, direction: int) -> [Dict[Tuple[int, int], Set[str]], bool]:
     path = defaultdict(set)
     loop_found = False
     path[(x, y)].add(direction)
@@ -28,7 +16,7 @@ def walk(obstacles, x, y, direction: int) -> [Dict[Tuple[int, int], Set[str]], b
         dx, dy = DIRECTIONS[direction]
         next_x, next_y = x + dx, y + dy
         # Exit if out of bound
-        if next_x < 0 or next_x >= R or next_y < 0 or next_y >= C:
+        if next_x < 0 or next_x >= rows or next_y < 0 or next_y >= cols:
             break
         if (next_x, next_y) in obstacles:
             # If the next cell is an obstacle rotate the direction
@@ -63,16 +51,41 @@ def print_path(rows, columns, x, y, path, obstacles):
                 print('{:3}'.format(item), end='')
 
 
+class Solution(Solver):
+
+    def parse_input(self) -> Any:
+        area_map = [list(line.strip()) for line in open('input.txt', 'r').readlines()]
+        rows, cols = len(area_map), len(area_map[0])
+        init_x, init_y, init_dir = 0, 0, '>'
+        obs = set()
+        for i in range(rows):
+            for j in range(cols):
+                current_grid = area_map[i][j]
+                if current_grid in DIR_CHARS:
+                    init_x, init_y, init_dir = i, j, DIR_CHARS.index(current_grid)
+                elif current_grid == '#':
+                    obs.add((i, j))
+        return rows, cols, init_x, init_y, init_dir, obs
+
+    def solve_first_part(self, parsed_input: Any) -> str:
+        rows, cols, start_x, start_y, start_direction, obstructions = parsed_input
+        guard_path, _ = walk(obstructions, rows, cols, start_x, start_y, start_direction)
+        return f'Distinct visited cells: {len(guard_path)}'
+
+    def solve_second_part(self, parsed_input: Any) -> str:
+        rows, cols, start_x, start_y, start_direction, obstructions = parsed_input
+        guard_path, _ = walk(obstructions, rows, cols, start_x, start_y, start_direction)
+        loop_count = 0
+        for x, y in guard_path:
+            if x == start_x and y == start_y:
+                continue
+            obstructions.add((x, y))
+            _, loop = walk(obstructions, rows, cols, start_x, start_y, start_direction)
+            loop_count += int(loop)
+            obstructions.remove((x, y))
+        return f'Loop count: {loop_count}'
+
+
 if __name__ == '__main__':
-    R, C, start_x, start_y, start_direction, obstructions = parse_input()
-    guard_path, _ = walk(obstructions, start_x, start_y, start_direction)
-    print(f'(Part 1) Distinct visited cells: {len(guard_path)}')
-    loop_count = 0
-    for x, y in guard_path:
-        if x == start_x and y == start_y:
-            continue
-        obstructions.add((x, y))
-        _, loop = walk(obstructions, start_x, start_y, start_direction)
-        loop_count += int(loop)
-        obstructions.remove((x, y))
-    print(f'(Part 2) Loop count: {loop_count}')
+    solution = Solution()
+    solution.run()
