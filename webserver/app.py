@@ -59,6 +59,9 @@ def solve():
     part = str(data.get("part"))
     if not (part.isdigit() and part in ["1", "2"]):
         return jsonify({"error": "Part must be 1 or 2."}), 400
+    input_file = data.get("input_file")
+    if not input_file:
+        return jsonify({"error": "Please provide your input file."}), 400
 
     # Locate the solution file and get the associated solver from its extension
     solution_files = [f for f in solution_dir.iterdir() if f.is_file() and f.name.startswith("solution")]
@@ -73,7 +76,6 @@ def solve():
     solver = AOC_SOLVERS_DIR / solver_name
 
     # Run the solution
-    input_file = data.get("input_file", "")
     try:
         result = runner(solver_path=solver, input_data=input_file, year=year, day=day, part=part)
         return jsonify({"output": result.stdout.strip()})
