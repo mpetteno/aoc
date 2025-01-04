@@ -5,7 +5,7 @@ import subprocess
 def generic_runner(command: str, solver_path: Path, input_data: str, year: str, day: str, part: str):
     return subprocess.run(
         [command, str(solver_path), year, day, part],
-        cwd=solver_path.parent,
+        cwd=solver_path.resolve().parent,
         input=input_data,
         text=True,
         capture_output=True,
@@ -16,7 +16,7 @@ def generic_runner(command: str, solver_path: Path, input_data: str, year: str, 
 def python_runner(command: str, solver_path: Path, input_data: str, year: str, day: str, part: str):
     return subprocess.run(
         [command, str(solver_path), "--year", year, "--day", day, "--part", part],
-        cwd=solver_path.parent,
+        cwd=solver_path.resolve().parent,
         input=input_data,
         text=True,
         capture_output=True,
@@ -28,7 +28,7 @@ def java_runner(command: str, solver_path: Path, input_data: str, year: str, day
     subprocess.run(["javac", str(solver_path)], check=True)
     return subprocess.run(
         [command, solver_path.suffix[:-5], year, day, part],
-        cwd=solver_path.parent,
+        cwd=solver_path.resolve().parent,
         input=input_data,
         text=True,
         capture_output=True,
@@ -41,7 +41,7 @@ def cpp_runner(command: str, solver_path: Path, input_data: str, year: str, day:
     subprocess.run([command, str(solver_path), "-o", executable], check=True)
     return subprocess.run(
         [executable, year, day, part],
-        cwd=solver_path.parent,
+        cwd=solver_path.resolve().parent,
         input=input_data,
         text=True,
         capture_output=True,
@@ -52,7 +52,7 @@ def cpp_runner(command: str, solver_path: Path, input_data: str, year: str, day:
 def rust_runner(command: str, solver_path: Path, input_data: str, year: str, day: str, part: str):
     return subprocess.run(
         [command, "--", year, day, part],
-        cwd=solver_path.parent,
+        cwd=solver_path.resolve().parent,
         input=input_data,
         text=True,
         capture_output=True,

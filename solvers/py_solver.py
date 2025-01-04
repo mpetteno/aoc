@@ -82,14 +82,14 @@ if __name__ == "__main__":
     vargs = parser.parse_args()
     # Dynamically load the day's solution module
     try:
-        module_path = Path("../editions") / str(vargs.year) / f"day{vargs.day}" / "solution.py"
+        module_path = Path("../editions").resolve() / str(vargs.year) / f"day{vargs.day}" / "solution.py"
         spec = importlib.util.spec_from_file_location("solution", module_path)
         module = importlib.util.module_from_spec(spec)
         sys.modules["solution"] = module
         spec.loader.exec_module(module)
         solution_class = getattr(module, "Solution")
     except (ModuleNotFoundError, AttributeError) as e:
-        logging.error(f"Error: solution for year {vargs.year} and day {vargs.day} not found.")
+        logging.error(f"Solution for year {vargs.year} and day {vargs.day} not found.")
         sys.exit(1)
     # Create the solver and run
     solver = solution_class(input_data=vargs.input_file.read())
