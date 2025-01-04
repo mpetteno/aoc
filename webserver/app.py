@@ -5,7 +5,7 @@ from pathlib import Path
 
 from flask import Flask, request, jsonify
 
-import webserver.runners as runners
+import runners
 
 aoc_webserver = Flask(__name__)
 
@@ -86,4 +86,4 @@ def solve():
 
 
 if __name__ == '__main__':
-    aoc_webserver.run(host='0.0.0.0', port=5000, debug=True, load_dotenv=True)
+    aoc_webserver.run(host='0.0.0.0', port=10000, debug=True, load_dotenv=True)
