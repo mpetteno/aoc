@@ -7,7 +7,7 @@ from flask import Flask, request, jsonify
 
 import webserver.runners as runners
 
-app = Flask(__name__)
+aoc_webserver = Flask(__name__)
 
 EXT_SOLVER_RUNNER_MAP = {
     "py": functools.partial(runners.python_runner, command="python"),
@@ -30,7 +30,7 @@ AOC_SOLVERS_DIR = Path("../solvers/")
 AVAILABLE_EDITIONS = list(d.name for d in AOC_EDITIONS_DIR.iterdir() if d.is_dir())
 
 
-@app.route('/solve', methods=['POST'])
+@aoc_webserver.route('/solve', methods=['POST'])
 def solve():
     """
     Handles solving Advent of Code (AoC) challenges by executing the corresponding
@@ -86,4 +86,4 @@ def solve():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    aoc_webserver.run(host='0.0.0.0', port=5000, debug=True, load_dotenv=True)
