@@ -26,7 +26,7 @@ Look for gates that does not follow those rules.
 from collections import defaultdict
 from typing import Any
 
-from solvers.python_solver import Solver
+from solvers.py_solver import Solver
 
 OP_MAP = {
     "AND": lambda a, b: a & b,

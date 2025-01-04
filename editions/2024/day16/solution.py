@@ -1,6 +1,6 @@
 from typing import Any
 
-from solvers.python_solver import Solver
+from solvers.py_solver import Solver
 
 DIRECTIONS = [(1, 0), (0, -1), (-1, 0), (0, 1)]
 TURN_SCORE = 1000

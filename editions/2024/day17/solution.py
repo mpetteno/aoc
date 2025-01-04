@@ -1,6 +1,6 @@
 from typing import Any
 
-from solvers.python_solver import Solver
+from solvers.py_solver import Solver
 
 
 def read_combo_operator(combo_op):

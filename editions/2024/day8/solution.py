@@ -2,7 +2,7 @@ import copy
 from collections import defaultdict
 from typing import Tuple, List, Any, Callable
 
-from solvers.python_solver import Solver
+from solvers.py_solver import Solver
 
 
 def find_antinode_locs(antenna_locs: List[Tuple[int, int]], rows: int, cols: int) -> List[Tuple[int, int]]:

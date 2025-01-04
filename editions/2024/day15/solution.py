@@ -2,7 +2,7 @@ import copy
 from collections import defaultdict
 from typing import Any
 
-from solvers.python_solver import Solver
+from solvers.py_solver import Solver
 
 
 MOVES = {"^": (-1, 0), "v": (1, 0), ">": (0, 1), "<": (0, -1)}

@@ -1,7 +1,7 @@
 from collections import defaultdict
 from typing import Any
 
-from solvers.python_solver import Solver
+from solvers.py_solver import Solver
 
 
 DAILY_SECRET_UPDATES = 2000

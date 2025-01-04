@@ -1,7 +1,7 @@
 import heapq
 from typing import Any
 
-from solvers.python_solver import Solver
+from solvers.py_solver import Solver
 
 ROWS, COLS = 71, 71
 START_X, START_Y = 0, 0

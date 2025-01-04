@@ -1,7 +1,7 @@
 from collections import defaultdict
 from typing import Tuple, Set, Dict, Any
 
-from solvers.python_solver import Solver
+from solvers.py_solver import Solver
 
 
 DIRECTIONS = [(-1, 0), (0, 1), (1, 0), (0, -1)]

@@ -1,6 +1,6 @@
 from typing import Any
 
-from solvers.python_solver import Solver
+from solvers.py_solver import Solver
 
 AREA_COLS = 101
 AREA_ROWS = 103

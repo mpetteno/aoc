@@ -1,7 +1,7 @@
 from collections import defaultdict
 from typing import Any
 
-from solvers.python_solver import Solver
+from solvers.py_solver import Solver
 
 
 def topological_dfs_sort(update, rules):

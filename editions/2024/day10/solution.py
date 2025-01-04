@@ -1,6 +1,6 @@
 from typing import Any
 
-from solvers.python_solver import Solver
+from solvers.py_solver import Solver
 
 
 def df_visit(trailhead, topographic_map, rows, cols):

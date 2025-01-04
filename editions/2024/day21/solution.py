@@ -1,7 +1,7 @@
 import functools
 from typing import Any
 
-from solvers.python_solver import Solver
+from solvers.py_solver import Solver
 
 
 def create_keypad_graph(keypad, invalid_coords):

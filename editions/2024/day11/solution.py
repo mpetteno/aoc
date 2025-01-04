@@ -1,7 +1,7 @@
 from collections import defaultdict
 from typing import Any, List
 
-from solvers.python_solver import Solver
+from solvers.py_solver import Solver
 
 
 def run_n_blinking(stones: List[str], n: int) -> int:

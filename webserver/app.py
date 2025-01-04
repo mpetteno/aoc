@@ -5,27 +5,28 @@ from pathlib import Path
 
 from flask import Flask, request, jsonify
 
-from webserver.runners import generic_runner, java_runner, cpp_runner, rust_runner
+import webserver.runners as runners
 
 app = Flask(__name__)
 
-LANGUAGE_RUNNERS = {
-    "py": functools.partial(generic_runner, command="python"),
-    "js": functools.partial(generic_runner, command="node"),
-    "ts": functools.partial(generic_runner, command="ts-node"),
-    "java": functools.partial(java_runner, command="java"),
-    "rs": functools.partial(rust_runner, command="cargo run"),
-    "cpp": functools.partial(cpp_runner, command="g++"),
-    "scala": functools.partial(generic_runner, command="scala"),
-    "kt": functools.partial(generic_runner, command="kotlin"),
-    "pl": functools.partial(generic_runner, command="perl"),
-    "lua": functools.partial(generic_runner, command="lua"),
-    "rb": functools.partial(generic_runner, command="ruby"),
-    "go": functools.partial(generic_runner, command="go run"),
-    "swift": functools.partial(generic_runner, command="swift"),
-    "m": functools.partial(generic_runner, command="clang"),
+EXT_SOLVER_RUNNER_MAP = {
+    "py": functools.partial(runners.python_runner, command="python"),
+    "js": functools.partial(runners.generic_runner, command="node"),
+    "ts": functools.partial(runners.generic_runner, command="ts-node"),
+    "java": functools.partial(runners.java_runner, command="java"),
+    "rs": functools.partial(runners.rust_runner, command="cargo run"),
+    "cpp": functools.partial(runners.cpp_runner, command="g++"),
+    "scala": functools.partial(runners.generic_runner, command="scala"),
+    "kt": functools.partial(runners.generic_runner, command="kotlin"),
+    "pl": functools.partial(runners.generic_runner, command="perl"),
+    "lua": functools.partial(runners.generic_runner, command="lua"),
+    "rb": functools.partial(runners.generic_runner, command="ruby"),
+    "go": functools.partial(runners.generic_runner, command="go run"),
+    "swift": functools.partial(runners.generic_runner, command="swift"),
+    "m": functools.partial(runners.generic_runner, command="clang"),
 }
 AOC_EDITIONS_DIR = Path("../editions/")
+AOC_SOLVERS_DIR = Path("../solvers/")
 AVAILABLE_EDITIONS = list(d.name for d in AOC_EDITIONS_DIR.iterdir() if d.is_dir())
 
 
@@ -59,20 +60,22 @@ def solve():
     if not (part.isdigit() and part in ["1", "2"]):
         return jsonify({"error": "Part must be 1 or 2."}), 400
 
-    # Locate the solution file and get its extension
+    # Locate the solution file and get the associated solver from its extension
     solution_files = [f for f in solution_dir.iterdir() if f.is_file() and f.name.startswith("solution")]
     if not solution_files or len(solution_files) > 1:
         return jsonify({"error": "Solution not found for given edition year and day."}), 404
-    solution_file = solution_files[0].absolute()
+    solution_file = solution_files[0]
     ext = solution_file.suffix[1:]
-    if ext not in LANGUAGE_RUNNERS:
+    if ext not in EXT_SOLVER_RUNNER_MAP:
         return jsonify({"error": f"Unsupported file extension: {ext}"}), 400
+    runner = EXT_SOLVER_RUNNER_MAP[ext]
+    solver_name = f"{ext}_solver.{ext}"
+    solver = AOC_SOLVERS_DIR / solver_name
 
     # Run the solution
-    runner = LANGUAGE_RUNNERS[ext]
     input_file = data.get("input_file", "")
     try:
-        result = runner(solution_path=solution_file, input_data=input_file, part=part)
+        result = runner(solver_path=solver, input_data=input_file, year=year, day=day, part=part)
         return jsonify({"output": result.stdout.strip()})
     except subprocess.CalledProcessError as e:
         logging.error(f"Command Execution Error: {e.stderr.strip()}")

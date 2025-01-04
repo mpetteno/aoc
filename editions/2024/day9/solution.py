@@ -1,7 +1,7 @@
 import copy
 from typing import Any
 
-from solvers.python_solver import Solver
+from solvers.py_solver import Solver
 
 
 def compact_disk(unwrapped_disk_content, files, free_space):

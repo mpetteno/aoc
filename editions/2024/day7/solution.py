@@ -1,7 +1,7 @@
 from operator import add, mul
 from typing import List, Callable, Any
 
-from solvers.python_solver import Solver
+from solvers.py_solver import Solver
 
 
 def concatenate(a: int, b: int) -> int:

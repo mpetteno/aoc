@@ -1,6 +1,6 @@
 from typing import Any
 
-from solvers.python_solver import Solver
+from solvers.py_solver import Solver
 
 
 def get_min_win_cost(machine, max_play_per_button=100, error_weight=0):
