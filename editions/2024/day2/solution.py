@@ -1,3 +1,7 @@
+from typing import Any
+
+from solvers.python_solver import Solver
+
 
 def get_lis(sequence):
     n = len(sequence)
@@ -21,18 +25,31 @@ def get_lds(sequence):
     return max(dp)
 
 
-if __name__ == "__main__":
-    report_safe_count_pt1 = 0
-    report_safe_count_pt2 = 0
-    with open("input.txt") as f:
-        reports = f.readlines()
-        for report in reports:
-            levels = report.strip().split()
-            levels_lis = get_lis(levels)
-            levels_lds = get_lds(levels)
-            lis_change_count = len(levels) - levels_lis
-            lds_change_count = len(levels) - levels_lds
-            report_safe_count_pt1 += 1 if lis_change_count <= 0 or lds_change_count <= 0 else 0
-            report_safe_count_pt2 += 1 if lis_change_count <= 1 or lds_change_count <= 1 else 0
-    print(f'(Pt. 1) Number of safe reports: {report_safe_count_pt1}')
-    print(f'(Pt. 2) Number of safe reports: {report_safe_count_pt2}')
+def count_safe_reports(reports, max_change_count: int):
+    report_safe_count = 0
+    for report in reports:
+        levels = report.strip().split()
+        levels_lis = get_lis(levels)
+        levels_lds = get_lds(levels)
+        lis_change_count = len(levels) - levels_lis
+        lds_change_count = len(levels) - levels_lds
+        report_safe_count += 1 if lis_change_count <= max_change_count or lds_change_count <= max_change_count else 0
+    return f'Number of safe reports: {report_safe_count}'
+
+
+class Solution(Solver):
+
+    def parse_input(self) -> Any:
+        reports = self.input_data.splitlines()
+        return reports
+
+    def solve_first_part(self, parsed_input: Any) -> str:
+        return count_safe_reports(parsed_input, 0)
+
+    def solve_second_part(self, parsed_input: Any) -> str:
+        return count_safe_reports(parsed_input, 1)
+
+
+if __name__ == '__main__':
+    solution = Solution()
+    solution.run()

@@ -12,6 +12,7 @@ This repository contains my solutions for the [Advent of Code](https://adventofc
 5. Start with brute force: Begin with the simplest, most straightforward solution. If time permits, I will refine it.
 6. Complete code before running: I
 7. No external libraries
+8. Part 2 is executed from scratch (meaning it recomputes part 1 if necessary)
 
 ## Webserver
 ```
