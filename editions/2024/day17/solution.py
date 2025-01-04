@@ -1,14 +1,6 @@
+from typing import Any
 
-
-def parse_input():
-    lines = open("input.txt").readlines()
-    REGISTERS["A"] = int(lines[0].split(" ")[-1])
-    REGISTERS["B"] = int(lines[1].split(" ")[-1])
-    REGISTERS["C"] = int(lines[2].split(" ")[-1])
-    p = lines[-1].split(" ")[-1].split(",")
-    opcodes = p[0::2]
-    operands = p[1::2]
-    return p, list(zip(opcodes, operands))
+from solvers.python_solver import Solver
 
 
 def read_combo_operator(combo_op):
@@ -98,34 +90,54 @@ def run_program(program):
     inst_pointer = 0
     run_output = []
     while inst_pointer < len(program):
-        opcode, operand = parsed_program[inst_pointer]
+        opcode, operand = program[inst_pointer]
         inst_pointer, result = INSTRUCTIONS_SET[int(opcode)](inst_pointer, int(operand))
         if result is not None:
             run_output.append(str(result))
     return run_output
 
 
-if __name__ == "__main__":
-    original_program, parsed_program = parse_input()
-    output = run_program(parsed_program)
-    print(f'(Part 1) Output: {",".join(output)}')
-    A = 0
-    j = 1
-    istart = 0
-    while 0 <= j <= len(original_program):
-        A <<= 3
-        for i in range(istart, 8):
-            REGISTERS["A"] = A + i
-            output = run_program(parsed_program)
-            if original_program[-j:] == output:
-                break
-        else:
-            j -= 1
-            A >>= 3
-            istart = A % 8 + 1
-            A >>= 3
-            continue
-        j += 1
-        A += i
+class Solution(Solver):
+
+    def parse_input(self) -> Any:
+        lines = self.input_data.splitlines()
+        REGISTERS["A"] = int(lines[0].split(" ")[-1])
+        REGISTERS["B"] = int(lines[1].split(" ")[-1])
+        REGISTERS["C"] = int(lines[2].split(" ")[-1])
+        p = lines[-1].split(" ")[-1].split(",")
+        opcodes = p[0::2]
+        operands = p[1::2]
+        return p, list(zip(opcodes, operands))
+
+    def solve_first_part(self, parsed_input: Any) -> str:
+        original_program, parsed_program = parsed_input
+        output = run_program(parsed_program)
+        return f'Output: {",".join(output)}'
+
+    def solve_second_part(self, parsed_input: Any) -> str:
+        original_program, parsed_program = parsed_input
+        a = 0
+        j = 1
         istart = 0
-    print(f'(Part 2) Minimum register A value for copy output: {A}')
+        while 0 <= j <= len(original_program):
+            a <<= 3
+            for i in range(istart, 8):
+                REGISTERS["A"] = a + i
+                output = run_program(parsed_program)
+                if original_program[-j:] == output:
+                    break
+            else:
+                j -= 1
+                a >>= 3
+                istart = a % 8 + 1
+                a >>= 3
+                continue
+            j += 1
+            a += i
+            istart = 0
+        return f'Minimum register A value for copy output: {a}'
+
+
+if __name__ == '__main__':
+    solution = Solution()
+    solution.run()

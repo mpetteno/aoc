@@ -1,10 +1,6 @@
+from typing import Any
 
-
-def parse_input():
-    lines = open("input.txt").readlines()
-    patterns = set(l.strip() for l in lines[0].split(","))
-    designs = [l.strip() for l in lines[2:]]
-    return patterns, designs
+from solvers.python_solver import Solver
 
 
 def is_composable(patterns, design):
@@ -28,13 +24,25 @@ def count_composition_ways(patterns, design):
     return dp[len(design)]
 
 
-if __name__ == "__main__":
-    available_patterns, requested_designs = parse_input()
-    composable_designs_count = 0
-    composition_ways_count = 0
-    for d in requested_designs:
-        if is_composable(available_patterns, d):
-            composable_designs_count += 1
-        composition_ways_count += count_composition_ways(available_patterns, d)
-    print(f'(Part 1) Number of composable designs: {composable_designs_count}')
-    print(f'(Part 2) Number of composition ways: {composition_ways_count}')
+class Solution(Solver):
+
+    def parse_input(self) -> Any:
+        lines = self.input_data.splitlines()
+        patterns = set(l.strip() for l in lines[0].split(","))
+        designs = [l.strip() for l in lines[2:]]
+        return patterns, designs
+
+    def solve_first_part(self, parsed_input: Any) -> str:
+        available_patterns, requested_designs = parsed_input
+        composable_designs_count = sum([1 for d in requested_designs if is_composable(available_patterns, d)])
+        return f'Number of composable designs: {composable_designs_count}'
+
+    def solve_second_part(self, parsed_input: Any) -> str:
+        available_patterns, requested_designs = parsed_input
+        composition_ways_count = sum([count_composition_ways(available_patterns, d) for d in requested_designs])
+        return f'Number of composition ways: {composition_ways_count}'
+
+
+if __name__ == '__main__':
+    solution = Solution()
+    solution.run()
