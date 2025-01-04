@@ -4,6 +4,7 @@ import subprocess
 from pathlib import Path
 
 from flask import Flask, request, jsonify
+from flask_cors import cross_origin
 
 import runners
 
@@ -31,6 +32,7 @@ AVAILABLE_EDITIONS = list(d.name for d in AOC_EDITIONS_DIR.iterdir() if d.is_dir
 
 
 @aoc_webserver.route('/solve', methods=['POST'])
+@cross_origin()
 def solve():
     """
     Handles solving Advent of Code (AoC) challenges by executing the corresponding
