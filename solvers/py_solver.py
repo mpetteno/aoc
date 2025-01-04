@@ -83,6 +83,7 @@ if __name__ == "__main__":
     # Dynamically load the day's solution module
     try:
         module_path = Path("../editions").resolve() / str(vargs.year) / f"day{vargs.day}" / "solution.py"
+        logging.info("Module path: " + str(module_path))
         spec = importlib.util.spec_from_file_location("solution", module_path)
         module = importlib.util.module_from_spec(spec)
         sys.modules["solution"] = module
