@@ -20,7 +20,7 @@ solution scripts in various programming languages. It exposes a single `/solve` 
 payload containing the challenge’s year, day, part, and input file. The system locates the appropriate solution file 
 based on the provided challenge details (note that the solution file name must start with `solution`), and determines 
 the correct solver to use based on its extension. For example, if the solution file for a given day has a `.py` 
-extension, the server will invoke the corresponding Python solver script `python_solver.py` in a subprocess. 
+extension, the server will invoke the corresponding Python solver script `py_solver.py` in a subprocess. 
 This script is then responsible for running the actual solution file. If a solver for a specific programming language 
 is not already implemented, it will be added as part of that year’s AoC solutions and the implementation details will 
 be provided in the edition page in my portfolio.
