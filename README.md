@@ -2,51 +2,25 @@
 
 This repository contains my solutions for the [Advent of Code](https://adventofcode.com/) problems.
 
-## Every year choose a programming language from this list
+Each year, I will choose a programming language either randomly by running the script `select_language.sh` or 
+deliberately if I wish to learn or explore a specific language.
 
-## Rules:
-1. No external help: ChatGPT does not exist. You need to learn to walk before you can run.
-2. Think before coding: I will read the problem and brainstorm solutions during my commute, without coding.
-3. Plan the architecture first: I will write a "main" function with the functions I want to call, then create them.
-4. Test before finalizing: I will write a test to ensure the example result is correct before applying it to the final solution.
-5. Start with brute force: Begin with the simplest, most straightforward solution. If time permits, I will refine it.
-6. Complete code before running: I
-7. No external libraries
-8. Part 2 is executed from scratch (meaning it recomputes part 1 if necessary)
+There are two rules: no external help and no external libraries.
+Also, the two parts of each challenge are considered independent, meaning part 2 will recompute part 1 if necessary.
+
+Every day, I will attempt to solve the proposed challenge and publish a brief description of the solution on my 
+[portfolio page](https://mpetteno.github.io/portfolio/en/projects/personal/aoc/) dedicated to AoC.
+Additionally, I have implemented a web server that can be called from each day’s page on my portfolio: this server 
+allows you to upload the input file for the current day’s challenge and returns the solution (see the next section).
 
 ## Webserver
-```
-cd ./webserver
-pyenv local 3.13.0
-python3 -m venv ./venv
-source ./venv/bin/activate
-pip install --upgrade pip
-pip3 install -r requirements.txt
-```
 
-## 2024 Edition (Python)
-- [x] Day 1
-- [x] Day 2
-- [x] Day 3
-- [x] Day 4
-- [x] Day 5
-- [x] Day 6
-- [x] Day 7
-- [x] Day 8
-- [x] Day 9
-- [x] Day 10
-- [x] Day 11
-- [x] Day 12
-- [x] Day 13
-- [x] Day 14
-- [x] Day 15
-- [x] Day 16
-- [x] Day 17
-- [x] Day 18
-- [x] Day 19
-- [x] Day 20
-- [x] Day 21
-- [x] Day 22
-- [x] Day 23
-- [x] Day 24
-- [x] Day 25
+The webserver implements a Flask-based application designed to solve Advent of Code (AoC) challenges by executing 
+solution scripts in various programming languages. It exposes a single `/solve` endpoint that accepts a JSON 
+payload containing the challenge’s year, day, part, and input file. The system locates the appropriate solution file 
+based on the provided challenge details (note that the solution file name must start with `solution`), and determines 
+the correct solver to use based on its extension. For example, if the solution file for a given day has a `.py` 
+extension, the server will invoke the corresponding Python solver script `python_solver.py` in a subprocess. 
+This script is then responsible for running the actual solution file. If a solver for a specific programming language 
+is not already implemented, it will be added as part of that year’s AoC solutions and the implementation details will 
+be provided in the edition page in my portfolio.
