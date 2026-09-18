@@ -75,7 +75,6 @@ fun main(args: Array<String>) {
     }
 
     val inputData = System.`in`.bufferedReader().readText()
-    println(inputData)
     val className = "editions.y$year.day$day.Solution"
 
     try {
