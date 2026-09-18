@@ -58,3 +58,19 @@ def rust_runner(command: str, solver_path: Path, input_data: str, year: str, day
         capture_output=True,
         check=True
     )
+
+
+def kotlin_runner(command: str, solver_path: Path, input_data: str, year: str, day: str, part: str):
+    jar_path = solver_path.resolve().parent.parent / "build" / "libs" / "aoc-solver.jar"
+    if not jar_path.is_file():
+        raise FileNotFoundError(
+            f"Kotlin solver jar not found at {jar_path}. Run './gradlew shadowJar' first."
+        )
+    return subprocess.run(
+        [command, "-jar", str(jar_path), "--year", year, "--day", day, "--part", part],
+        cwd=jar_path.parent,
+        input=input_data,
+        text=True,
+        capture_output=True,
+        check=True,
+    )

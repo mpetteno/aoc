@@ -18,7 +18,7 @@ EXT_SOLVER_RUNNER_MAP = {
     "rs": functools.partial(runners.rust_runner, command="cargo run"),
     "cpp": functools.partial(runners.cpp_runner, command="g++"),
     "scala": functools.partial(runners.generic_runner, command="scala"),
-    "kt": functools.partial(runners.generic_runner, command="kotlin"),
+    "kt": functools.partial(runners.kotlin_runner, command="java"),
     "pl": functools.partial(runners.generic_runner, command="perl"),
     "lua": functools.partial(runners.generic_runner, command="lua"),
     "rb": functools.partial(runners.generic_runner, command="ruby"),
@@ -66,7 +66,7 @@ def solve():
         return jsonify({"error": "Please provide your input file."}), 400
 
     # Locate the solution file and get the associated solver from its extension
-    solution_files = [f for f in solution_dir.iterdir() if f.is_file() and f.name.startswith("solution")]
+    solution_files = [f for f in solution_dir.iterdir() if f.is_file() and f.name.lower().startswith("solution")]
     if not solution_files or len(solution_files) > 1:
         return jsonify({"error": "Solution not found for given edition year and day."}), 404
     solution_file = solution_files[0]

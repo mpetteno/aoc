@@ -1,161 +1,145 @@
-# Byte-compiled / optimized / DLL files
+# =========================================================================
+# Python: Caches & Compiled Bytecode
+# =========================================================================
 __pycache__/
 *.py[cod]
 *$py.class
-
-# C extensions
 *.so
+*.sage.py
 
-# Distribution / packaging
+# =========================================================================
+# Python: Environments & Virtual Environments
+# =========================================================================
+.venv/
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+.python-version
+.pdm-python
+.pdm-build/
+__pypackages__/
+
+# Package Managers (Uncomment lockfiles if building an isolated application instead of a library)
+.pdm.toml
+# Pipfile.lock
+# poetry.lock
+# pdm.lock
+
+# =========================================================================
+# Python: Build, Packaging & Distribution
+# =========================================================================
 .Python
 build/
-develop-eggs/
 dist/
+sdist/
+wheels/
+*.egg-info/
+*.egg
+*.manifest
+*.spec
+MANIFEST
+.installed.cfg
+develop-eggs/
 downloads/
 eggs/
 .eggs/
 lib/
 lib64/
 parts/
-sdist/
 var/
-wheels/
 share/python-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
-MANIFEST
 
-# PyInstaller
-#  Usually these files are written by a python script from a template
-#  before PyInstaller builds the exe, so as to inject date/other infos into it.
-*.manifest
-*.spec
-
-# Installer logs
-pip-log.txt
-pip-delete-this-directory.txt
-
-# Unit test / coverage reports
-htmlcov/
+# =========================================================================
+# Python: Testing, Coverage & Type Checking
+# =========================================================================
+.pytest_cache/
 .tox/
 .nox/
 .coverage
 .coverage.*
-.cache
+.cache/
+.hypothesis/
+.mypy_cache/
+.pyre/
+.pytype/
+.dmypy.json
+dmypy.json
+htmlcov/
+cover/
 nosetests.xml
 coverage.xml
 *.cover
 *.py,cover
-.hypothesis/
-.pytest_cache/
-cover/
+cython_debug/
 
-# Translations
-*.mo
-*.pot
+# =========================================================================
+# Gradle & Java Build System
+# =========================================================================
+.gradle/
+out/
+.gradle-test-kit/
+local.properties
 
-# Django stuff:
+# =========================================================================
+# Frameworks & Tooling (Django, Flask, Celery, Sphinx, etc.)
+# =========================================================================
+# Django & Databases
 *.log
 local_settings.py
 db.sqlite3
 db.sqlite3-journal
 
-# Flask stuff:
+# Flask & Webassets
 instance/
 .webassets-cache
 
-# Scrapy stuff:
-.scrapy
-
-# Sphinx documentation
-docs/_build/
-
-# PyBuilder
-.pybuilder/
-target/
-
-# Jupyter Notebook
-.ipynb_checkpoints
-
-# IPython
-profile_default/
-ipython_config.py
-
-# pyenv
-#   For a library or package, you might want to ignore these files since the code is
-#   intended to run in multiple environments; otherwise, check them in:
-# .python-version
-
-# pipenv
-#   According to pypa/pipenv#598, it is recommended to include Pipfile.lock in version control.
-#   However, in case of collaboration, if having platform-specific dependencies or dependencies
-#   having no cross-platform support, pipenv may install dependencies that don't work, or not
-#   install all needed dependencies.
-#Pipfile.lock
-
-# poetry
-#   Similar to Pipfile.lock, it is generally recommended to include poetry.lock in version control.
-#   This is especially recommended for binary packages to ensure reproducibility, and is more
-#   commonly ignored for libraries.
-#   https://python-poetry.org/docs/basic-usage/#commit-your-poetrylock-file-to-version-control
-#poetry.lock
-
-# pdm
-#   Similar to Pipfile.lock, it is generally recommended to include pdm.lock in version control.
-#pdm.lock
-#   pdm stores project-wide configurations in .pdm.toml, but it is recommended to not include it
-#   in version control.
-#   https://pdm.fming.dev/latest/usage/project/#working-with-version-control
-.pdm.toml
-.pdm-python
-.pdm-build/
-
-# PEP 582; used by e.g. github.com/David-OConnor/pyflow and github.com/pdm-project/pdm
-__pypackages__/
-
-# Celery stuff
+# Task Queues & Web Crawlers
 celerybeat-schedule
 celerybeat.pid
+.scrapy
 
-# SageMath parsed files
-*.sage.py
+# Documentation & Notebooks
+docs/_build/
+/site
+.ipynb_checkpoints
 
-# Environments
-.venv
-env/
-venv/
-ENV/
-env.bak/
-venv.bak/
+# Logs & Debugging
+pip-log.txt
+pip-delete-this-directory.txt
 
-# Spyder project settings
+# =========================================================================
+# IDEs, Editors & Project Settings
+# =========================================================================
+# JetBrains (IntelliJ IDEA, PyCharm, Android Studio)
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Other Editors & Tools
 .spyderproject
 .spyproject
-
-# Rope project settings
 .ropeproject
+profile_default/
+ipython_config.py
+.bsp/
 
-# mkdocs documentation
-/site
+# =========================================================================
+# Kotlin & JVM
+# =========================================================================
+# Kotlin Compiler & Metadata
+.kotlin/
+*.class
+*.klib
+*.kt.bc
 
-# mypy
-.mypy_cache/
-.dmypy.json
-dmypy.json
+# Kotlin Multiplatform & WebAssembly
+.kotlin-js/
+build/kotlin/
+kotlin-js-store/
 
-# Pyre type checker
-.pyre/
-
-# pytype static type analyzer
-.pytype/
-
-# Cython debug symbols
-cython_debug/
-
-# PyCharm
-#  JetBrains specific template is maintained in a separate JetBrains.gitignore that can
-#  be found at https://github.com/github/gitignore/blob/main/Global/JetBrains.gitignore
-#  and can be added to the global gitignore or merged into this file.  For a more nuclear
-#  option (not recommended) you can uncomment the following to ignore the entire idea folder.
-.idea/
+# Kotlin Notebooks & Scripting
+.kotlin_notebook/
+*.main.kts.jar
