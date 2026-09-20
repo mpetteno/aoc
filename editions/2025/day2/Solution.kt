@@ -3,7 +3,7 @@ package editions.y2025.day2
 import solvers.Solver
 
 /**
- * Solution for identifying invalid IDs in ranges of numbers based on repeated digit patterns.
+ * Solution for Advent of Code 2025 - Day 2: Gift Shop.
  *
  * GENERAL ALGORITHM OVERVIEW: DIRECT GENERATION
  *

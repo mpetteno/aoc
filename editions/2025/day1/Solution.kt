@@ -3,7 +3,7 @@ package editions.y2025.day1
 import solvers.Solver
 
 /**
- * Solution for simulating combination safe dial rotations and tracking zero-point crossings.
+ * Solution for Advent of Code 2025 - Day 1: Secret Entrance.
  *
  * PROBLEM SUMMARY:
  * A circular dial numbered 0 through 99 (100 positions total) starts at position 50.
