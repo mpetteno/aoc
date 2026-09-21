@@ -3,7 +3,7 @@ package editions.y2025.day8
 import solvers.Solver
 
 /**
- * Solution for Advent of Code 2025 - Day 8: Playground Junction Boxes.
+ * Solution for Advent of Code 2025 - Day 8: Playground.
  *
  * Models electrical connections between 3D spatial junction boxes using minimum squared Euclidean distances.
  * Part 1 uses a Union-Find data structure to make the 1,000 shortest pairwise connections and calculates
