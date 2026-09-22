@@ -14,7 +14,7 @@ class Solution(inputData: String? = null) : Solver(inputData) {
     /**
      * Parses the raw input into an adjacency list mapping each device ID to its list of connected output devices.
      */
-    override fun parseInput(rawInput: String): Map<String, List<String>> {
+    override fun parseInput(rawInput: String): Any {
         val rawLines = rawInput.lines().filter { it.isNotBlank() }
         val deviceConnectionDiagram = mutableMapOf<String, List<String>>()
         for (line in rawLines) {
